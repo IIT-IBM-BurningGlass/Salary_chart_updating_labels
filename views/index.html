@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Job Trends</title>
+	<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<link rel="stylesheet" href="/style/style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+	<h1>Job Trends</h1>
+
+	<b> Display Jobs in </b><select id="sel1" class="droplist">
+		<option value=505>All States</option>
+		<option value=506>Alabama</option>
+		<option value=519>Alaska</option>
+		<option value=523>Arizona</option>
+		<option value=530>Arkansas</option>
+		<option value=539>California</option>
+		<option value=566>Colorado</option>
+		<option value=586>Columbia</option>
+		<option value=574>Connecticut</option>
+		<option value=583>Delaware</option>
+		<option value=588>Florida</option>
+		<option value=610>Georgia</option>
+		<option value=626>Hawaii</option>
+		<option value=628>Idaho</option>
+		<option value=635>Illinois</option>
+		<option value=648>Indiana</option>
+		<option value=665>Iowa</option>
+		<option value=675>Kansas</option>
+		<option value=682>Kentucky</option>
+		<option value=693>Louisiana</option>
+		<option value=702>Maine</option>
+		<option value=709>Maryland</option>
+		<option value=717>Massachusetts</option>
+		<option value=726>Michigan</option>
+		<option value=742>Minnesota</option>
+		<option value=751>Mississippi</option>
+		<option value=757>Missouri</option>
+		<option value=767>Montana</option>
+		<option value=772>Nebraska</option>
+		<option value=776>Nevada</option>
+		<option value=780>New Hampshire</option>
+		<option value=786>New Jersey</option>
+		<option value=794>New Mexico</option>
+		<option value=799>New York</option>
+		<option value=813>North Carolina</option>
+		<option value=828>North Dakota</option>
+		<option value=832>Ohio</option>
+		<option value=849>Oklahoma</option>
+		<option value=854>Oregon</option>
+		<option value=861>Pennsylvania</option>
+		<option value=878>Rhode Island</option>
+		<option value=881>South Carolina</option>
+		<option value=892>South Dakota</option>
+		<option value=897>Tennessee</option>
+		<option value=908>Texas</option>
+		<option value=934>Utah</option>
+		<option value=940>Vermont</option>
+		<option value=943>Virginia</option>
+		<option value=955>Washington</option>
+		<option value=968>West Virginia</option>
+		<option value=979>Wisconsin</option>
+		<option value=995>Wyoming</option>
+		<option value=998>Guam</option>
+		<option value=999>Puerto Rico</option>
+		<option value=1008>Virgin Islands</option>		
+	</select>	
+	<!-- select id="sel2" class="droplist">
+		<option value=0>MSA</option>
+		<option class="State_AL" value="509">Birmingham Metro Area</option>
+		<option class="State_AL" value="515">Huntsville Metro Area</option>
+		<option class="State_AL" value="516">Mobile Metro Area</option>
+		<option class="State_AL" value="517">Montgomery Metro Area</option>
+		<option class="State_AK" value="520">Anchorage Metro Area</option>
+		<option class="State_AK" value="522">Juneau Metro Area</option>
+		<option class="State_AZ" value="526">Phoenix Metro Area</option>
+		<option class="State_AZ" value="528">Tucson Metro Area</option>
+		<option class="State_AR" value="531">Fayetteville Metro Area</option>
+		<option class="State_AR" value="535">Little Rock Metro Area</option>
+		<option class="State_AR" value="536">Memphis Metro Area</option>
+		<option class="State_CA" value="540">Bakersfield Metro Area</option>
+		<option class="State_CA" value="543">Fresno Metro Area</option>
+		<option class="State_CA" value="545">Los Angeles Metro Area</option>
+		<option class="State_CA" value="550">Oxnard Metro Area</option>
+		<option class="State_CA" value="552">Riverside Metro Area</option>
+<option class="State_CA" value="553">Sacramento Metro Area</option>
+<option class="State_CA" value="554">Salinas Metro Area</option>
+<option class="State_CA" value="555">San Diego Metro Area</option>
+<option class="State_CA" value="556">San Francisco Metro Area</option>
+<option class="State_CA" value="557">San Jose Metro Area</option>
+<option class="State_CA" value="559">Santa Barbara Metro Area</option>
+<option class="State_CA" value="561">Santa Rosa Metro Area</option>
+<option class="State_CO" value="567">Boulder Metro Area</option>
+<option class="State_CO" value="568">Colorado Springs Metro Area</option>
+<option class="State_CO" value="569">Denver Metro Area</option>
+<option class="State_CO" value="570">Fort Collins Metro Area</option>
+<option class="State_CT" value="575">Bridgeport Metro Area</option>
+<option class="State_CT" value="577">Hartford Metro Area</option>
+<option class="State_CT" value="578">New Haven Metro Area</option>
+<option class="State_CT" value="580">Springfield Metro Area</option>
+<option class="State_CT" value="582">Worcester Metro Area</option>
+<option class="State_DE" value="584">Dover Metro Area</option>
+<option class="State_DE" value="585">Philadelphia Metro Area</option>
+<option class="State_DC" value="587">Washington Metro Area</option>
+<option class="State_FL" value="589">Cape Coral Metro Area</option>
+<option class="State_FL" value="592">Gainesville Metro Area</option>
+<option class="State_FL" value="593">Jacksonville Metro Area</option>
+<option class="State_FL" value="595">Miami Metro Area</option>
+<option class="State_FL" value="597">North Port Metro Area</option>
+<option class="State_FL" value="599">Orlando Metro Area</option>
+<option class="State_FL" value="600">Palm Bay Metro Area</option>
+<option class="State_FL" value="608">Tallahassee Metro Area</option>
+<option class="State_FL" value="609">Tampa Metro Area</option>
+<option class="State_GA" value="613">Atlanta Metro Area</option>
+<option class="State_GA" value="614">Augusta Metro Area</option>
+<option class="State_GA" value="616">Chattanooga Metro Area</option>
+<option class="State_GA" value="623">Savannah Metro Area</option>
+<option class="State_HI" value="627">Honolulu Metro Area</option>
+<option class="State_ID" value="629">Boise City Metro Area</option>
+<option class="State_IL" value="639">Chicago Metro Area</option>
+<option class="State_IL" value="641">Davenport Metro Area</option>
+<option class="State_IL" value="644">Peoria Metro Area</option>
+<option class="State_IL" value="646">Springfield Metro Area</option>
+<option class="State_IL" value="647">St. Louis Metro Area</option>
+<option class="State_IN" value="651">Chicago Metro Area</option>
+<option class="State_IN" value="652">Cincinnati Metro Area</option>
+<option class="State_IN" value="656">Fort Wayne Metro Area</option>
+<option class="State_IN" value="657">Indianapolis Metro Area</option>
+<option class="State_IN" value="660">Louisville Metro Area</option>
+<option class="State_IA" value="667">Cedar Rapids Metro Area</option>
+<option class="State_IA" value="668">Council Bluffs Metro Area</option>
+<option class="State_IA" value="669">Davenport Metro Area</option>
+<option class="State_IA" value="670">Des Moines Metro Area</option>
+<option class="State_IA" value="672">Iowa City Metro Area</option>
+<option class="State_KS" value="676">Kansas City Metro Area</option>
+<option class="State_KS" value="680">Topeka Metro Area</option>
+<option class="State_KS" value="681">Wichita Metro Area</option>
+<option class="State_KY" value="684">Cincinnati Metro Area</option>
+<option class="State_KY" value="688">Frankfort Metro Area</option>
+<option class="State_KY" value="690">Lexington Metro Area</option>
+<option class="State_KY" value="691">Louisville Metro Area</option>
+<option class="State_LA" value="695">Baton Rouge Metro Area</option>
+<option class="State_LA" value="700">New Orleans Metro Area</option>
+<option class="State_LA" value="701">Shreveport Metro Area</option>
+<option class="State_ME" value="706">Portland Metro Area</option>
+<option class="State_MD" value="710">Annapolis Metro Area</option>
+<option class="State_MD" value="711">Baltimore Metro Area</option>
+<option class="State_MD" value="714">Philadelphia Metro Area</option>
+<option class="State_MD" value="716">Washington Metro Area</option>
+<option class="State_MA" value="719">Boston Metro Area</option>
+<option class="State_MA" value="723">Providence Metro Area</option>
+<option class="State_MA" value="724">Springfield Metro Area</option>
+<option class="State_MA" value="725">Worcester Metro Area</option>
+<option class="State_MI" value="727">Ann Arbor Metro Area</option>
+<option class="State_MI" value="730">Detroit Metro Area</option>
+<option class="State_MI" value="731">Flint Metro Area</option>
+<option class="State_MI" value="732">Grand Rapids Metro Area</option>
+<option class="State_MI" value="735">Kalamazoo Metro Area</option>
+<option class="State_MI" value="736">Lansing Metro Area</option>
+<option class="State_MN" value="744">Fargo Metro Area</option>
+<option class="State_MN" value="748">Minneapolis Metro Area</option>
+<option class="State_MS" value="754">Jackson Metro Area</option>
+<option class="State_MS" value="755">Memphis Metro Area</option>
+<option class="State_MO" value="760">Fayetteville Metro Area</option>
+<option class="State_MO" value="761">Jefferson City Metro Area</option>
+<option class="State_MO" value="763">Kansas City Metro Area</option>
+<option class="State_MO" value="764">Springfield Metro Area</option>
+<option class="State_MO" value="766">St. Louis Metro Area</option>
+<option class="State_MT" value="768">Billings Metro Area</option>
+<option class="State_NE" value="773">Council Bluffs Metro Area</option>
+<option class="State_NE" value="774">Lincoln Metro Area</option>
+<option class="State_NV" value="778">Las Vegas Metro Area</option>
+<option class="State_NV" value="779">Reno Metro Area</option>
+<option class="State_NH" value="781">Boston Metro Area</option>
+<option class="State_NH" value="782">Concord Metro Area</option>
+<option class="State_NH" value="783">Manchester Metro Area</option>
+<option class="State_NJ" value="787">Allentown Metro Area</option>
+<option class="State_NJ" value="789">New York Metro Area</option>
+<option class="State_NJ" value="791">Philadelphia Metro Area</option>
+<option class="State_NJ" value="792">Trenton Metro Area</option>
+<option class="State_NM" value="795">Albuquerque Metro Area</option>
+<option class="State_NY" value="800">Albany Metro Area</option>
+<option class="State_NY" value="802">Buffalo Metro Area</option>
+<option class="State_NY" value="807">New York Metro Area</option>
+<option class="State_NY" value="808">Poughkeepsie Metro Area</option>
+<option class="State_NY" value="809">Rochester Metro Area</option>
+<option class="State_NY" value="810">Syracuse Metro Area</option>
+<option class="State_NC" value="813">Asheville Metro Area</option>
+<option class="State_NC" value="815">Charlotte Metro Area</option>
+<option class="State_NC" value="816">Durham Metro Area</option>
+<option class="State_NC" value="819">Greensboro Metro Area</option>
+<option class="State_NC" value="823">Raleigh Metro Area</option>
+<option class="State_NC" value="825">Virginia Beach Metro Area</option>
+<option class="State_NC" value="827">Winston Metro Area</option>
+<option class="State_ND" value="830">Fargo Metro Area</option>
+<option class="State_OH" value="833">Akron Metro Area</option>
+<option class="State_OH" value="835">Cincinnati Metro Area</option>
+<option class="State_OH" value="836">Cleveland Metro Area</option>
+<option class="State_OH" value="837">Columbus Metro Area</option>
+<option class="State_OH" value="838">Dayton Metro Area</option>
+<option class="State_OH" value="846">Toledo Metro Area</option>
+<option class="State_OK" value="852">Oklahoma City Metro Area</option>
+<option class="State_OK" value="853">Tulsa Metro Area</option>
+<option class="State_OR" value="857">Eugene Metro Area</option>
+<option class="State_OR" value="859">Portland Metro Area</option>
+<option class="State_OR" value="860">Salem Metro Area</option>
+<option class="State_PA" value="862">Allentown Metro Area</option>
+<option class="State_PA" value="865">Harrisburg Metro Area</option>
+<option class="State_PA" value="867">Lancaster Metro Area</option>
+<option class="State_PA" value="869">New York Metro Area</option>
+<option class="State_PA" value="870">Philadelphia Metro Area</option>
+<option class="State_PA" value="871">Pittsburgh Metro Area</option>
+<option class="State_PA" value="873">Scranton Metro Area</option>
+<option class="State_RI" value="880">Providence Metro Area</option>
+<option class="State_SC" value="883">Augusta Metro Area</option>
+<option class="State_SC" value="884">Charleston Metro Area</option>
+<option class="State_SC" value="885">Charlotte Metro Area</option>
+<option class="State_SC" value="886">Columbia Metro Area</option>
+<option class="State_SC" value="888">Greenville Metro Area</option>
+<option class="State_SD" value="896">Sioux Falls Metro Area</option>
+<option class="State_TN" value="898">Chattanooga Metro Area</option>
+<option class="State_TN" value="904">Knoxville Metro Area</option>
+<option class="State_TN" value="905">Memphis Metro Area</option>
+<option class="State_TN" value="907">Nashville Metro Area</option>
+<option class="State_TX" value="911">Austin Metro Area</option>
+<option class="State_TX" value="916">Dallas Metro Area</option>
+<option class="State_TX" value="917">El Paso Metro Area</option>
+<option class="State_TX" value="918">Houston Metro Area</option>
+<option class="State_TX" value="927">San Antonio Metro Area</option>
+<option class="State_UT" value="937">Provo Metro Area</option>
+<option class="State_UT" value="938">Salt Lake City Metro Area</option>
+<option class="State_VT" value="941">Burlington Metro Area</option>
+<option class="State_VT" value="942">Montpelier Metro Area</option>
+<option class="State_VA" value="950">Richmond Metro Area</option>
+<option class="State_VA" value="952">Virginia Beach Metro Area</option>
+<option class="State_VA" value="953">Washington Metro Area</option>
+<option class="State_WA" value="962">Olympia Metro Area</option>
+<option class="State_WA" value="963">Portland Metro Area</option>
+<option class="State_WA" value="964">Seattle Metro Area</option>
+<option class="State_WA" value="965">Spokane Metro Area</option>
+<option class="State_WV" value="969">Charleston Metro Area</option>
+<option class="State_WV" value="976">Washington Metro Area</option>
+<option class="State_WI" value="981">Chicago Metro Area</option>
+<option class="State_WI" value="985">Green Bay Metro Area</option>
+<option class="State_WI" value="988">Madison Metro Area</option>
+<option class="State_WI" value="989">Milwaukee Metro Area</option>
+<option class="State_WI" value="990">Minneapolis Metro Area</option>
+<option class="State_WY" value="997">Cheyenne Metro Area</option>
+<option class="State_PR" value="1006">San Juan Metro Area</option>
+<option class="State_AL" value="1135">Columbus Metro Area</option>
+<option class="State_CA" value="1136">Modesto Metro Area</option>
+<option class="State_CA" value="1137">Santa Cruz Metro Area</option>
+<option class="State_CA" value="1138">Stockton Metro Area</option>
+<option class="State_CA" value="1139">Vallejo Metro Area</option>
+<option class="State_CO" value="1140">Greeley Metro Area</option>
+<option class="State_FL" value="1141">Deltona Metro Area</option>
+<option class="State_FL" value="1142">Lakeland Metro Area</option>
+<option class="State_FL" value="1143">Pensacola Metro Area</option>
+<option class="State_GA" value="1144">Columbus Metro Area</option>
+<option class="State_GA" value="1145">Macon Metro Area</option>
+<option class="State_IL" value="1146">Bloomington Metro Area</option>
+<option class="State_IL" value="1147">Champaign Metro Area</option>
+<option class="State_IL" value="1148">Rockford Metro Area</option>
+<option class="State_IN" value="1149">Evansville Metro Area</option>
+	</select -->	
+<b> for </b>	<select id="sel3"  class="droplist">
+		<option value=19>Career Area</option>
+		<option value=10>Agriculture, Horticulture, & the Outdoors</option>
+		<option value=15>Business Management and Operations</option>
+		<option value=2>Clerical and Administrative</option>
+		<option value=5>Construction, Extraction, and Architecture</option>
+		<option value=6>Customer and Client Support</option>
+		<option value=23>Design, Media, and Writing</option>
+		<option value=7>Education and Human Services</option>
+		<option value=19>Engineering</option>
+		<option value=9>Finance</option>
+		<option value=11>Health Care including Nursing</option>
+		<option value=12>Hospitality, Food, and Tourism</option>
+		<option value=24>Human Resources</option>
+		<option value=4>Information Technology</option>
+		<option value=25>Law, Compliance, and Public Safety</option>
+		<option value=14>Maintenance, Repair, and Installation</option>
+		<option value=16>Manufacturing and Production</option>
+		<option value=26>Marketing and Public Relations</option>
+		<option value=27>Performing Arts</option>
+		<option value=18>Personal Care and Services</option>
+		<option value=20>Planning and Analysis</option>
+		<option value=28>Sales</option>
+		<option value=31>Science and Research</option>
+		<option value=30>Transportation</option>
+	</select>	
+	<br></br>
+<div id="bardes">A representation of average salary for various occipation titles for an occupation group filtered by career area and geographical location. </div>
+<div id="piedes">A representation of top skills demanded in the selected occupation group</div>
+
+<div id="chartLabel"></div>
+<div id="barChart"></div>
+<div id="pieChart"></div>
+<div id="tooltip" class="hidden">
+<p id="value">100</p>
+</div>
+<script type="text/javascript" src="/scripts/index.js"></script>
+    </body>
+</html>
+

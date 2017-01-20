@@ -1,0 +1,23 @@
+{
+  "name": "skillscout",
+  "version": "0.0.2",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "1.14.x",
+    "express": "4.13.x",
+    "ejs": "2.4.x",
+    "crypto": "0.0.3",
+    "oauth-1.0a": "2.0.0",
+    "request": "2.75.0",
+    "path": "0.12.7",
+    "http": "0.0.0",
+    "routes": "2.1.0",
+    "socket.io": "1.5.0" 
+  },
+  "engines": {
+  	"node": "4.x"
+  }
+}
